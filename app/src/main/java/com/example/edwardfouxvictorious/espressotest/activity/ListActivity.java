@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.example.edwardfouxvictorious.espressotest.EspressoApplication;
 import com.example.edwardfouxvictorious.espressotest.R;
 import com.example.edwardfouxvictorious.espressotest.adapter.EarthquakeAdapter;
 import com.example.edwardfouxvictorious.espressotest.model.Earthquake;
@@ -14,14 +15,25 @@ import com.example.edwardfouxvictorious.espressotest.model.EarthquakeResponse;
 import com.example.edwardfouxvictorious.espressotest.presenter.ListPresenter;
 import com.example.edwardfouxvictorious.espressotest.view.ActivityView;
 
+import javax.inject.Inject;
+
+import retrofit.Retrofit;
+
 public class ListActivity extends AppCompatActivity implements ActivityView {
 
     private RecyclerView recyclerView;
     private EarthquakeAdapter.ItemClickListener itemClickListener;
     public static final String EARTHQUAKE = "earthquake";
 
+    @Inject
+    Retrofit retrofit;
+
+    ListPresenter listPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ((EspressoApplication) getApplication()).getNetComponent().inject(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -35,7 +47,7 @@ public class ListActivity extends AppCompatActivity implements ActivityView {
             String west = extras.getString(EntryActivity.WEST, "55.2");
             String north = extras.getString(EntryActivity.NORTH, "44.1");
 
-            ListPresenter listPresenter = new ListPresenter();
+            listPresenter = new ListPresenter(retrofit);
             listPresenter.init(this, south, east, west, north);
             listPresenter.getData();
         }

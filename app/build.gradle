@@ -32,4 +32,14 @@ dependencies {
     testCompile 'junit:junit:4.12'
     repositories { jcenter() }
     dependencies { testCompile "org.mockito:mockito-core:2.0.57-beta" }
+
+    // Dagger2
+    compile 'com.google.dagger:dagger:2.7'
+    annotationProcessor "com.google.dagger:dagger-compiler:2.7"
+    provided 'javax.annotation:jsr250-api:1.0'
+
+    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:2.7"
+
+    // Mockito Dependencies
+    debugCompile 'org.mockito:mockito-core:2.0.57-beta'
 }

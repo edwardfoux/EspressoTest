@@ -24,7 +24,7 @@ public class ListPresenterTest {
 
     @Before
     public void setup() {
-        listPresenter = new ListPresenter();
+        listPresenter = new ListPresenter(retrofit);
 
         listPresenter.init(activityView, "20", "10", "20", "30");
 

@@ -1,14 +1,18 @@
 package com.example.edwardfouxvictorious.espressotest.activity;
 
 
+import android.app.Instrumentation;
 import android.content.Intent;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.example.edwardfouxvictorious.espressotest.EspressoApplication;
 import com.example.edwardfouxvictorious.espressotest.R;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +30,15 @@ public class ListActivityTest {
     @Rule
     public ActivityTestRule<ListActivity> mActivityTestRule = new ActivityTestRule<>(ListActivity.class, false, false);
 
+    @Before
+    public void setup() {
+        Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
+        EspressoApplication application
+                = (EspressoApplication) instrumentation.getTargetContext().getApplicationContext();
+        TestComponent component = DaggerTestComponent.create();
+        application.setComponent(component);
+        component.inject(this);
+    }
     @Test
     public void listActivityTest() {
 

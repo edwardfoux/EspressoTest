@@ -10,7 +10,6 @@ import com.example.edwardfouxvictorious.espressotest.view.ActivityView;
 import java.lang.ref.WeakReference;
 
 import retrofit.Call;
-import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 
 /**
@@ -20,7 +19,7 @@ import retrofit.Retrofit;
 public class ListPresenter {
 
     public static final String URL = "http://api.geonames.org";
-    public static final String URL_PATH = "/earthquakesJSON?formatted=true&north=44.1&south=-9.9&east=-22.4&west=55.2&username=mkoppelman ";
+    public static final String URL_PATH = "/earthquakesJSON?formatted=true&north=44.1&south=-9.9&east=-22.4&west=55.2&username=mkoppelman";
     //public static final String URL_PATH = "/earthquakesJSON?formatted=true&north={north}&south={south}&east={east}&west={west}&username=demo";
 
     @VisibleForTesting
@@ -34,7 +33,13 @@ public class ListPresenter {
     private String west;
     private String north;
 
-    public void init(ActivityView view, String south,String east, String west, String north) {
+    Retrofit retrofit;
+
+    public ListPresenter(Retrofit retrofit) {
+        this.retrofit = retrofit;
+    }
+
+    public void init(ActivityView view, String south, String east, String west, String north) {
         this.view = view;
 
         this.south = (south == null) ? "-9.9" : south ;
@@ -47,11 +52,6 @@ public class ListPresenter {
      * Called by the MainActivity to start loading the data
      */
     public void getData() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
         EarthquakeRequest earthquakeApi = retrofit.create(EarthquakeRequest.class);
 
         Call<EarthquakeResponse> call = earthquakeApi.getEarthQuackesList(/*south, east, west, north*/);
