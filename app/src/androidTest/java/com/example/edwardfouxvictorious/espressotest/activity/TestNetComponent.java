@@ -5,7 +5,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = TestModule.class)
-public interface TestComponent extends NetComponent {
+@Component(modules = TestNetModule.class)
+public interface TestNetComponent extends NetComponent {
     void inject(ListActivityTest test);
 }

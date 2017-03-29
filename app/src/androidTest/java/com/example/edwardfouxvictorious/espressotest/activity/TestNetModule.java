@@ -17,7 +17,7 @@ import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 
 @Module
-public class TestModule {
+public class TestNetModule {
 
     private String baseUrl;
     private String jsonObject = "{\n" +
@@ -43,7 +43,7 @@ public class TestModule {
             "\t]\n" +
             "}";
 
-    public TestModule(String baseUrl) {
+    public TestNetModule(String baseUrl) {
         this.baseUrl = baseUrl;
     }
 
@@ -51,7 +51,7 @@ public class TestModule {
     @Singleton
     Retrofit provideRetrofit() {
         OkHttpClient okHttpClient = new OkHttpClient();
-        okHttpClient.interceptors().add(new ForbiddenIntefceptor());
+        okHttpClient.interceptors().add(new MockInterceptor());
 
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)
@@ -60,7 +60,7 @@ public class TestModule {
                 .build();
     }
 
-    private class ForbiddenIntefceptor implements Interceptor {
+    private class MockInterceptor implements Interceptor {
         @Override
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request();

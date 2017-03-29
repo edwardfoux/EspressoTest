@@ -11,11 +11,16 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.example.edwardfouxvictorious.espressotest.EspressoApplication;
 import com.example.edwardfouxvictorious.espressotest.R;
+import com.example.edwardfouxvictorious.espressotest.presenter.ListPresenter;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import javax.inject.Inject;
+
+import retrofit.Retrofit;
 
 import static android.support.test.espresso.action.ViewActions.swipeDown;
 import static android.support.test.espresso.action.ViewActions.swipeUp;
@@ -27,15 +32,19 @@ import static com.example.edwardfouxvictorious.espressotest.activity.EntryActivi
 @RunWith(AndroidJUnit4.class)
 public class ListActivityTest {
 
+    @Inject
+    Retrofit retrofit;
+
     @Rule
-    public ActivityTestRule<ListActivity> mActivityTestRule = new ActivityTestRule<>(ListActivity.class, false, false);
+    public ActivityTestRule<ListActivity> mActivityTestRule = new ActivityTestRule<>(ListActivity.class, true, false);
 
     @Before
     public void setup() {
         Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
         EspressoApplication application
                 = (EspressoApplication) instrumentation.getTargetContext().getApplicationContext();
-        TestComponent component = DaggerTestComponent.create();
+
+        TestNetComponent component = DaggerTestNetComponent.builder().testNetModule(new TestNetModule(ListPresenter.URL)).build();
         application.setComponent(component);
         component.inject(this);
     }
@@ -52,6 +61,5 @@ public class ListActivityTest {
 
         Espresso.onView(ViewMatchers.withId(R.id.recycler_view)).perform(swipeUp());
         Espresso.onView(ViewMatchers.withId(R.id.recycler_view)).perform(swipeDown());
-
     }
 }
