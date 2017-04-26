@@ -1,14 +1,19 @@
 package com.example.edwardfouxvictorious.espressotest.adapter;
 
+import android.content.Context;
+import android.graphics.Point;
 import android.support.annotation.VisibleForTesting;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
 
-import com.example.edwardfouxvictorious.espressotest.model.Earthquake;
 import com.example.edwardfouxvictorious.espressotest.R;
 import com.example.edwardfouxvictorious.espressotest.adapter.viewholder.EarthquakeViewHolder;
+import com.example.edwardfouxvictorious.espressotest.model.Earthquake;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +32,11 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeViewHolder
     @Override
     public EarthquakeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.earhquake_item, null);
+        WindowManager windowManager = (WindowManager)parent.getContext().getSystemService(Context.WINDOW_SERVICE);
+        Point point = new Point();
+        windowManager.getDefaultDisplay().getSize(point);
+        int width = point.x;
+        view.setLayoutParams(new LinearLayoutCompat.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT));
         return new EarthquakeViewHolder(view);
     }
 
