@@ -3,32 +3,35 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <RelativeLayout
+    <LinearLayout
         android:minHeight="100dp"
-        android:padding="10dp"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:weightSum="5">
 
         <TextView
             android:id="@+id/date"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"/>
-
-        <TextView
-            android:id="@+id/magnitude"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_alignParentTop="true"/>
+            android:textSize="25sp"
+            android:padding="20dp"
+            android:layout_weight="3"
+            android:textColor="@android:color/black"/>
 
         <TextView
             android:id="@+id/depth"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"/>
-    </RelativeLayout>
+            android:textSize="25sp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/magnitude"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:padding="20dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
 </android.support.v7.widget.CardView>
